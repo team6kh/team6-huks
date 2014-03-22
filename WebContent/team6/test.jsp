@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-test msg
+test msg 2
 </body>
 </html>
