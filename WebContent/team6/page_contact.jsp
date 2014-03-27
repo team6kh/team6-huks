@@ -26,7 +26,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>	
 
-<body>
+<body onload="initialize()">
 
 <!--=== Top ===-->    
 <div class="top">
@@ -108,7 +108,7 @@
 <!--=== End Breadcrumbs ===-->
 
 <!-- Google Map -->
-<div id="map" class="map margin-bottom-40">
+<div id="map_canvas" class="map margin-bottom-40">
 </div><!---/map-->
 <!-- End Google Map -->
 
@@ -231,6 +231,47 @@
 	</div><!--/container-->	
 </div><!--/copyright-->	
 <!--=== End Copyright ===-->
+
+<!-- Google Map -->
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>  
+<script type="text/javascript">  
+	function initialize() { 
+		var myLatlng = new google.maps.LatLng(37.535163, 126.902534); 
+		var myOptions = { 
+			zoom: 17, 
+			center: myLatlng, 
+			mapTypeId: google.maps.MapTypeId.ROADMAP 
+		} 
+		var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);		
+		
+		var marker;
+		var latlng = new google.maps.LatLng(37.535163, 126.902534);
+		marker = new google.maps.Marker({ 
+			   position: latlng, 
+			   map: map,
+			   title: 'TEAM6'
+		});		
+
+		google.maps.event.addListener(marker, 'mouseover', function(){ 
+		var infowindow = new google.maps.InfoWindow( 
+				     { content: 'TEAM6', 
+				       size: new google.maps.Size(100,100) 
+				     })
+
+		infowindow.open(map, marker);
+		});		
+		
+		geocoder = new google.maps.Geocoder();
+		geocoder.geocode({'latLng': latlng}, function(results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+						if (results[0]) {
+							var address_nm = results[0].formatted_address;
+							document.getElementById('map_addr').innerHTML = address_nm;
+						}
+					}else{}
+		});		
+	}
+</script> 
 
 <!-- JS Global Compulsory -->           
 <script type="text/javascript" src="assets/js/jquery-1.8.2.min.js"></script>
